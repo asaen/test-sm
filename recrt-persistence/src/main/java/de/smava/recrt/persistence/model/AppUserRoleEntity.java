@@ -21,6 +21,13 @@ public class AppUserRoleEntity implements AppUserRole {
 
     @Override
     public void setRole(UserRole role) {
+        if (this.key == null) {
+            synchronized (AppUserRoleEntity.class) {
+                if (this.key == null) {
+                    this.key = new AppUserRoleKey();
+                }
+            }
+        }
         this.key.setRole(role);
     }
 
@@ -29,6 +36,13 @@ public class AppUserRoleEntity implements AppUserRole {
     }
 
     public void setAppUser(AppUserEntity appUser) {
+        if (this.key == null) {
+            synchronized (AppUserRoleEntity.class) {
+                if (this.key == null) {
+                    this.key = new AppUserRoleKey();
+                }
+            }
+        }
         this.key.setAppUser(appUser);
     }
 }
