@@ -27,6 +27,9 @@ public class BankAccountApi {
     @Qualifier("bankAccountPersistenceService")
     private BankAccountService bankAccountService;
 
+    @Autowired
+    @Qualifier("bankAccountJmsProducer")
+    private BankAccountService bankAccountJms;
 
     @Secured({"ROLE_USER"})
     @RequestMapping(method = RequestMethod.GET)
@@ -47,7 +50,7 @@ public class BankAccountApi {
     @Secured({"ROLE_ADMIN"})
     @RequestMapping(method = RequestMethod.POST)
     public BankAccountResource create(@RequestBody BankAccountResource account) throws RecrtServiceException {
-        BankAccount saved = bankAccountService.create(account);
+        BankAccount saved = bankAccountJms.create(account);
         if (saved != null) {
             return new BankAccountResource(saved);
         }
